@@ -24,4 +24,14 @@ public class RomanNumeralsTest {
         String result = romanNumerals.convert(number);
         assertEquals(expectedResult, result);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "4, 'IV'",
+            "5, 'V'",
+    })
+    void convert_4to5_returnsRomanString(int number, String expectedResult){
+        String result = romanNumerals.convert(number);
+        assertEquals(expectedResult, result);
+    }
 }
