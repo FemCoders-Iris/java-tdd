@@ -58,4 +58,38 @@ public class RomanNumeralsTest {
         String result = romanNumerals.convert(number);
         assertEquals(expectedResult, result);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "14, 'XIV'",
+            "15, 'XV'",
+            "16, 'XVI'",
+            "17, 'XVII'",
+            "18, 'XVIII'",
+            "19, 'XIX'",
+            "20, 'XX'",
+            "21, 'XXI'",
+            "22, 'XXII'",
+            "23, 'XXIII'",
+            "24, 'XXIV'",
+            "25, 'XXV'",
+            "26, 'XXVI'",
+            "27, 'XXVII'",
+            "28, 'XXVIII'",
+            "29, 'XXIX'",
+            "30, 'XXX'",
+            "31, 'XXXI'",
+            "32, 'XXXII'",
+            "33, 'XXXIII'",
+            "34, 'XXXIV'",
+            "35, 'XXXV'",
+            "36, 'XXXVI'",
+            "37, 'XXXVII'",
+            "38, 'XXXVIII'",
+            "39, 'XXXIX'",
+})
+    void convert_14to15_returnsRomanString(int number, String expectedResult){
+        String result = romanNumerals.convert(number);
+        assertEquals(expectedResult, result);
+    }
 }
