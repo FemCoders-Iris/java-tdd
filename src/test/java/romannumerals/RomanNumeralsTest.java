@@ -34,4 +34,15 @@ public class RomanNumeralsTest {
         String result = romanNumerals.convert(number);
         assertEquals(expectedResult, result);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "6, 'VI'",
+            "7, 'VII'",
+            "8, 'VIII'",
+    })
+    void convert_6to8_returnsRomanString(int number, String expectedResult){
+        String result = romanNumerals.convert(number);
+        assertEquals(expectedResult, result);
+    }
 }
