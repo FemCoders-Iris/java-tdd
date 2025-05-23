@@ -45,4 +45,17 @@ public class RomanNumeralsTest {
         String result = romanNumerals.convert(number);
         assertEquals(expectedResult, result);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "9, 'IX'",
+            "10, 'X'",
+            "11, 'XI'",
+            "12, 'XII'",
+            "13, 'XIII'"
+    })
+    void convert_9to13_returnsRomanString(int number, String expectedResult){
+        String result = romanNumerals.convert(number);
+        assertEquals(expectedResult, result);
+    }
 }
