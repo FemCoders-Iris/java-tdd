@@ -14,6 +14,8 @@ public class RomanNumerals {
         int tens = 0;
         int hundreds = 0;
         int unitsRemainder, tensRemainder, hundredsRemainder;
+        boolean appendV = false;
+        boolean appendX = false;
 
         while(true) {
             if (number > 99) {
@@ -74,24 +76,26 @@ public class RomanNumerals {
         //Units
         while(true) {
             if(units >= 9){
-                unitsRemainder = units - 10;
-                stringBuilder.append("I".repeat(-unitsRemainder));
-                stringBuilder.append("X");
-                break;
+                units = Math.abs(units - 10);
+                appendX = true;
             } else if (units >= 4) {
                 unitsRemainder = units - 5;
                 if(unitsRemainder > 0){
                     stringBuilder.append("V");
-                    units = unitsRemainder;
                 } else{
-                    stringBuilder.append("I".repeat(-unitsRemainder));
-                    stringBuilder.append("V");
-                    break;
+                    appendV = true;
                 }
+                units = Math.abs(unitsRemainder);
             } else {
                  stringBuilder.append("I".repeat(Math.max(0, units)));
                 break;
             }
+        }
+        if (appendV){
+            stringBuilder.append("V");
+        }
+        if (appendX){
+            stringBuilder.append("X");
         }
         return stringBuilder.toString();
     }
