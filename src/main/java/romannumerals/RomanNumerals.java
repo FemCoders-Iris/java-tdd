@@ -1,13 +1,13 @@
 package romannumerals;
 
 public class RomanNumerals {
-//    public static void main(String[] args) {
-//        RomanNumerals  romanNumerals = new RomanNumerals();
-//        for (int i = 47; i < 100; i++){
-//            String roman = romanNumerals.convert(i);
-//            System.out.println("\"" + i + ", '" + roman + "'\",");
-//        }
-//    }
+    public static void main(String[] args) {
+        RomanNumerals  romanNumerals = new RomanNumerals();
+        for (int i = 90; i < 100; i++){
+            String roman = romanNumerals.convert(i);
+            System.out.println("\"" + i + ", '" + roman + "'\",");
+        }
+    }
     public String convert(int number) {
         StringBuilder stringBuilder = new StringBuilder();
         int units;
@@ -16,7 +16,7 @@ public class RomanNumerals {
         int unitsRemainder, tensRemainder, hundredsRemainder;
 
         while(true) {
-            if (number > 90) {
+            if (number > 99) {
                 hundreds = (int) Math.floor(number / 100);
                 number = number - hundreds * 100;
             } else if (number > 9) {
@@ -28,8 +28,23 @@ public class RomanNumerals {
             }
         }
         //Hundreds
-        if(hundreds >= 1){
-            while(true){
+        while(true){
+            if(hundreds >= 9) {
+                hundredsRemainder = hundreds - 10;
+                stringBuilder.append("C".repeat(-hundredsRemainder));
+                stringBuilder.append("M");
+                break;
+            } else if (hundreds >= 4) {
+                hundredsRemainder = hundreds - 5;
+                if (hundredsRemainder > 0) {
+                    stringBuilder.append("D");
+                    hundreds = hundredsRemainder;
+                } else {
+                    stringBuilder.append("C".repeat(-hundredsRemainder));
+                    stringBuilder.append("D");
+                    break;
+                }
+            } else {
                 stringBuilder.append("C".repeat(Math.max(0, hundreds)));
                 break;
             }

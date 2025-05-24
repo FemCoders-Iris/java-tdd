@@ -169,4 +169,21 @@ public class RomanNumeralsTest {
         String result = romanNumerals.convert(number);
         assertEquals(expectedResult, result);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "91, 'XCI'",
+            "92, 'XCII'",
+            "93, 'XCIII'",
+            "94, 'XCIV'",
+            "95, 'XCV'",
+            "96, 'XCVI'",
+            "97, 'XCVII'",
+            "98, 'XCVIII'",
+            "99, 'XCIX'"
+    })
+    void convert_91to99_returnsRomanString(int number, String expectedResult){
+        String result = romanNumerals.convert(number);
+        assertEquals(expectedResult, result);
+    }
 }
