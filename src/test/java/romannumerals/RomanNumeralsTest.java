@@ -159,4 +159,14 @@ public class RomanNumeralsTest {
         String result = romanNumerals.convert(number);
         assertEquals(expectedResult, result);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "90, 'XC'",
+            "100, 'C'",
+    })
+    void convert_90and100_returnsRomanString(int number, String expectedResult){
+        String result = romanNumerals.convert(number);
+        assertEquals(expectedResult, result);
+    }
 }

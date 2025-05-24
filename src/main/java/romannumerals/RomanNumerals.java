@@ -12,17 +12,36 @@ public class RomanNumerals {
         StringBuilder stringBuilder = new StringBuilder();
         int units;
         int tens = 0;
-        int unitsRemainder, tensRemainder;
+        int hundreds = 0;
+        int unitsRemainder, tensRemainder, hundredsRemainder;
 
-        if (number > 9){
-            tens = (int) Math.floor(number/10);
-            units = number -tens * 10;
-        } else{
-            units = number;
+        while(true) {
+            if (number > 90) {
+                hundreds = (int) Math.floor(number / 100);
+                number = number - hundreds * 100;
+            } else if (number > 9) {
+                tens = (int) Math.floor(number / 10);
+                number = number - tens * 10;
+            } else {
+                units = number;
+                break;
+            }
+        }
+        //Hundreds
+        if(hundreds >= 1){
+            while(true){
+                stringBuilder.append("C".repeat(Math.max(0, hundreds)));
+                break;
+            }
         }
         //Tens
         while(true) {
-            if (tens >= 4) {
+            if(tens >= 9) {
+                tensRemainder = tens - 10;
+                stringBuilder.append("X".repeat(-tensRemainder));
+                stringBuilder.append("C");
+                break;
+            } else if (tens >= 4) {
                 tensRemainder = tens - 5;
                 if (tensRemainder > 0) {
                     stringBuilder.append("L");
