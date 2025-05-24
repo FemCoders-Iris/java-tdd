@@ -3,53 +3,54 @@ package romannumerals;
 public class RomanNumerals {
     public String convert(int number) {
         StringBuilder stringBuilder = new StringBuilder();
-        int secondLetter;
-        boolean appendL = false;
-        //First position
+        int units;
+        int tens = 0;
+        int unitsRemainder, tensRemainder;
+
+        if (number > 9){
+            tens = (int) Math.floor(number/10);
+            units = number -tens * 10;
+        } else{
+            units = number;
+        }
+        //Tens
         while(true) {
-            if (number >= 40) {
-                int remainder = number - 50;
-                if(remainder > 0){
+            if (tens >= 4) {
+                tensRemainder = tens - 5;
+                if (tensRemainder > 0) {
                     stringBuilder.append("L");
-                    number = remainder;
-                } else{
-                    number = -remainder;
-                    appendL = true;
-                }
-            }
-            if (number >= 9) {
-                int remainder = number - 10;
-                if(remainder > 0){
-                    stringBuilder.append("X");
-                    number = remainder;
-                } else{
-                    for (int i = 0; i < -remainder; i++) {
-                        stringBuilder.append("I");
-                    }
-                    stringBuilder.append("X");
+                    tens = tensRemainder;
+                } else {
+                    stringBuilder.append("X".repeat(-tensRemainder));
+                    stringBuilder.append("L");
                     break;
                 }
-            } else if (number >= 4) {
-                int remainder = number - 5;
-                if(remainder > 0){
+            } else {
+                stringBuilder.append("X".repeat(Math.max(0, tens)));
+                break;
+            }
+        }
+        //Units
+        while(true) {
+            if(units >= 9){
+                unitsRemainder = units - 10;
+                stringBuilder.append("I".repeat(-unitsRemainder));
+                stringBuilder.append("X");
+                break;
+            } else if (units >= 4) {
+                unitsRemainder = units - 5;
+                if(unitsRemainder > 0){
                     stringBuilder.append("V");
-                    number = remainder;
+                    units = unitsRemainder;
                 } else{
-                    for (int i = 0; i < -remainder; i++) {
-                        stringBuilder.append("I");
-                    }
+                    stringBuilder.append("I".repeat(-unitsRemainder));
                     stringBuilder.append("V");
                     break;
                 }
             } else {
-                for (int i = 0; i < number; i++) {
-                    stringBuilder.append("I");
-                }
+                 stringBuilder.append("I".repeat(Math.max(0, units)));
                 break;
             }
-        }
-        if (appendL){
-            stringBuilder.append('L');
         }
         return stringBuilder.toString();
     }
