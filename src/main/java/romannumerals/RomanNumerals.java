@@ -3,7 +3,20 @@ package romannumerals;
 public class RomanNumerals {
     public String convert(int number) {
         StringBuilder stringBuilder = new StringBuilder();
+        int secondLetter;
+        boolean appendL = false;
+        //First position
         while(true) {
+            if (number >= 40) {
+                int remainder = number - 50;
+                if(remainder > 0){
+                    stringBuilder.append("L");
+                    number = remainder;
+                } else{
+                    number = -remainder;
+                    appendL = true;
+                }
+            }
             if (number >= 9) {
                 int remainder = number - 10;
                 if(remainder > 0){
@@ -34,6 +47,9 @@ public class RomanNumerals {
                 }
                 break;
             }
+        }
+        if (appendL){
+            stringBuilder.append('L');
         }
         return stringBuilder.toString();
     }

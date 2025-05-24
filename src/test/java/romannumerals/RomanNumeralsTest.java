@@ -87,8 +87,18 @@ public class RomanNumeralsTest {
             "37, 'XXXVII'",
             "38, 'XXXVIII'",
             "39, 'XXXIX'",
-})
-    void convert_14to15_returnsRomanString(int number, String expectedResult){
+    })
+    void convert_14to39_returnsRomanString(int number, String expectedResult){
+        String result = romanNumerals.convert(number);
+        assertEquals(expectedResult, result);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "40, 'XL'",
+            "50, 'L'",
+    })
+    void convert_40and50_returnsRomanString(int number, String expectedResult){
         String result = romanNumerals.convert(number);
         assertEquals(expectedResult, result);
     }
