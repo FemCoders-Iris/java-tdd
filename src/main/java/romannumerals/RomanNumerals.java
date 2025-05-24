@@ -1,6 +1,13 @@
 package romannumerals;
 
 public class RomanNumerals {
+//    public static void main(String[] args) {
+//        RomanNumerals  romanNumerals = new RomanNumerals();
+//        for (int i = 47; i < 100; i++){
+//            String roman = romanNumerals.convert(i);
+//            System.out.println("\"" + i + ", '" + roman + "'\",");
+//        }
+//    }
     public String convert(int number) {
         StringBuilder stringBuilder = new StringBuilder();
         int units;
