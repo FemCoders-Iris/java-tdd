@@ -1,10 +1,14 @@
 package romannumerals;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.InputMismatchException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class RomanNumeralsTest {
     RomanNumerals romanNumerals;
@@ -185,5 +189,37 @@ public class RomanNumeralsTest {
     void convert_91to99_returnsRomanString(int number, String expectedResult){
         String result = romanNumerals.convert(number);
         assertEquals(expectedResult, result);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "900, 'CM'",
+            "1000, 'M'",
+    })
+    void convert_900and1000_returnsRomanString(int number, String expectedResult){
+        String result = romanNumerals.convert(number);
+        assertEquals(expectedResult, result);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "1900, 'MCM'",
+            "3999, 'MMMCMXCIX'",
+            "1345, 'MCCCXLV'",
+    })
+    void convert_1900_3999_returnsRomanString(int number, String expectedResult){
+        String result = romanNumerals.convert(number);
+        assertEquals(expectedResult, result);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "4000",
+            "-5"
+    })
+    void convert_outsideRange_returnsException(int number){
+        InputMismatchException exception = assertThrows(InputMismatchException.class, () ->
+                romanNumerals.convert(number));
+        assertEquals("This roman number doesn't exist", exception.getMessage());
     }
 }
