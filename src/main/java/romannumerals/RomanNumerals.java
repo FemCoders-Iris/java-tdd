@@ -1,102 +1,74 @@
 package romannumerals;
 
+import java.util.LinkedHashMap;
+
 public class RomanNumerals {
     public static void main(String[] args) {
         RomanNumerals  romanNumerals = new RomanNumerals();
-        for (int i = 90; i < 100; i++){
+        for (int i = 999; i < 1000; i++){
             String roman = romanNumerals.convert(i);
             System.out.println("\"" + i + ", '" + roman + "'\",");
         }
     }
+    //mas num 3999
     public String convert(int number) {
         StringBuilder stringBuilder = new StringBuilder();
         int units;
         int tens = 0;
         int hundreds = 0;
-        int unitsRemainder, tensRemainder, hundredsRemainder;
-        boolean appendV = false;
-        boolean appendX = false;
+        int thousands = 0;
 
         while(true) {
-            if (number > 99) {
+            if (number > 999) {
+                thousands = (int) Math.floor(number / 1000);
+                number = number - thousands * 100;
+                System.out.println("t" + thousands);
+            } else if (number > 99) {
                 hundreds = (int) Math.floor(number / 100);
                 number = number - hundreds * 100;
+                System.out.println("h" + hundreds);
             } else if (number > 9) {
                 tens = (int) Math.floor(number / 10);
                 number = number - tens * 10;
+                System.out.println("t" + tens);
             } else {
                 units = number;
+                System.out.println("u" + units);
                 break;
             }
         }
-        //Hundreds
-        while(true){
-            if(hundreds >= 9) {
-                hundredsRemainder = hundreds - 10;
-                stringBuilder.append("C".repeat(-hundredsRemainder));
-                stringBuilder.append("M");
-                break;
-            } else if (hundreds >= 4) {
-                hundredsRemainder = hundreds - 5;
-                if (hundredsRemainder > 0) {
-                    stringBuilder.append("D");
-                    hundreds = hundredsRemainder;
+
+        LinkedHashMap<Integer, Integer> linkedHashMap = new LinkedHashMap<>();
+        linkedHashMap.put(6, thousands);
+        linkedHashMap.put(4, hundreds);
+        linkedHashMap.put(2, tens);
+        linkedHashMap.put(0, units);
+
+        String[] romanLetters = {"I", "V", "X", "L", "C", "D", "M"};
+
+        linkedHashMap.forEach((letter, quantity) -> {
+            while(true) {
+                System.out.println(quantity + " " + letter);
+                if (quantity >= 9) {
+                    quantity -= 10;
+                    stringBuilder.append(romanLetters[letter].repeat(-quantity));
+                    stringBuilder.append(romanLetters[letter + 2]);
+                    break;
+                } else if (quantity >= 4) {
+                    quantity -= 5;
+                    if (quantity > 0) {
+                        stringBuilder.append(romanLetters[letter + 1]);
+                    } else {
+                        stringBuilder.append(romanLetters[letter].repeat(-quantity));
+                        stringBuilder.append(romanLetters[letter + 1]);
+                        break;
+                    }
                 } else {
-                    stringBuilder.append("C".repeat(-hundredsRemainder));
-                    stringBuilder.append("D");
+                    stringBuilder.append(romanLetters[letter].repeat(Math.max(0, quantity)));
                     break;
                 }
-            } else {
-                stringBuilder.append("C".repeat(Math.max(0, hundreds)));
-                break;
             }
-        }
-        //Tens
-        while(true) {
-            if(tens >= 9) {
-                tensRemainder = tens - 10;
-                stringBuilder.append("X".repeat(-tensRemainder));
-                stringBuilder.append("C");
-                break;
-            } else if (tens >= 4) {
-                tensRemainder = tens - 5;
-                if (tensRemainder > 0) {
-                    stringBuilder.append("L");
-                    tens = tensRemainder;
-                } else {
-                    stringBuilder.append("X".repeat(-tensRemainder));
-                    stringBuilder.append("L");
-                    break;
-                }
-            } else {
-                stringBuilder.append("X".repeat(Math.max(0, tens)));
-                break;
-            }
-        }
-        //Units
-        while(true) {
-            if(units >= 9){
-                units = Math.abs(units - 10);
-                appendX = true;
-            } else if (units >= 4) {
-                unitsRemainder = units - 5;
-                if(unitsRemainder > 0){
-                    stringBuilder.append("V");
-                } else{
-                    appendV = true;
-                }
-                units = Math.abs(unitsRemainder);
-            } else {
-                 stringBuilder.append("I".repeat(Math.max(0, units)));
-                break;
-            }
-        }
-        if (appendV){
-            stringBuilder.append("V");
-        }
-        if (appendX){
-            stringBuilder.append("X");
-        }
+        });
         return stringBuilder.toString();
     }
 }
